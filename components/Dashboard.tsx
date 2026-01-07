@@ -50,7 +50,11 @@ const Dashboard: React.FC = () => {
   };
 
   if (results) {
-    return <ResultsView data={results} onReset={() => setResults(null)} />;
+    return (
+      <div className="max-w-7xl mx-auto py-12 px-4">
+        <ResultsView data={results} onReset={() => setResults(null)} />
+      </div>
+    );
   }
 
   return (

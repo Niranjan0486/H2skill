@@ -7,138 +7,102 @@ interface LandingPageProps {
 
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-10">
-           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-             <path d="M0 100 C 20 0 50 0 100 100 Z" fill="url(#grad)" />
-             <defs>
-               <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                 <stop offset="0%" style={{ stopColor: '#059669', stopOpacity: 1 }} />
-                 <stop offset="100%" style={{ stopColor: '#10b981', stopOpacity: 1 }} />
-               </linearGradient>
-             </defs>
-           </svg>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full mb-8">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-            <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">AI-Powered ESG Compliance</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-            Verify Factory Compliance <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-500">
-              From Space
-            </span>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="text-center">
+          <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+            AI-Powered Environmental
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600"> Compliance Verification</span>
           </h1>
-          
-          <p className="max-w-2xl mx-auto text-xl text-slate-600 mb-10 leading-relaxed">
-            Automate due diligence by combining extracted report data with real-time satellite imagery analysis to detect environmental risks instantly.
+          <p className="text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Verify factory environmental compliance in minutes using Gemini AI, satellite imagery, and automated report analysis.
           </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button 
-              onClick={onGetStarted}
-              className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl text-lg font-semibold shadow-lg hover:shadow-emerald-500/30 transition-all flex items-center justify-center gap-2"
-            >
-              Start Analysis
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button 
-              onClick={onGetStarted} // Demo essentially leads to same flow
-              className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-8 py-4 rounded-xl text-lg font-semibold transition-all flex items-center justify-center gap-2"
-            >
-              View Demo
-            </button>
-          </div>
+          <button
+            onClick={onGetStarted}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
+          >
+            Get Started
+            <ArrowRight className="h-5 w-5" />
+          </button>
         </div>
       </section>
 
-      {/* How it Works */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">How It Works</h2>
-            <p className="text-slate-600 max-w-xl mx-auto">
-              Three simple steps to automate your environmental auditing process using Gemini and Satellite data.
-            </p>
-          </div>
+      {/* Features Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-white">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">How It Works</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            Our platform combines cutting-edge AI with satellite data to provide instant compliance verification
+          </p>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <UploadCloud className="h-8 w-8 text-blue-600" />,
-                title: "1. Upload Report",
-                desc: "Upload a PDF due diligence report. Our system parses the document."
-              },
-              {
-                icon: <BrainCircuit className="h-8 w-8 text-purple-600" />,
-                title: "2. AI Extraction",
-                desc: "Gemini AI extracts key entities: Factory Name, Location, Year, and Capacity."
-              },
-              {
-                icon: <Satellite className="h-8 w-8 text-emerald-600" />,
-                title: "3. Satellite Audit",
-                desc: "We cross-reference coordinates with historical satellite imagery to detect deforestation."
-              }
-            ].map((step, idx) => (
-              <div key={idx} className="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition-shadow">
-                <div className="bg-white w-16 h-16 rounded-xl shadow-sm flex items-center justify-center mb-6">
-                  {step.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{step.desc}</p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: UploadCloud,
+              title: "Upload Report",
+              description: "Simply upload your factory audit report (PDF). Our system automatically extracts key data points and factory location."
+            },
+            {
+              icon: BrainCircuit,
+              title: "AI Analysis",
+              description: "Gemini AI analyzes the report, cross-references satellite imagery, and identifies potential compliance risks."
+            },
+            {
+              icon: Satellite,
+              title: "Satellite Verification",
+              description: "Real-time satellite data validates environmental claims, tracking vegetation coverage and land use changes."
+            }
+          ].map((feature, index) => (
+            <div key={index} className="bg-slate-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+              <div className="bg-emerald-100 p-4 rounded-xl w-fit mb-6">
+                <feature.icon className="h-8 w-8 text-emerald-600" />
               </div>
-            ))}
-          </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Why It Matters */}
-      <section className="py-24 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Why Automated Monitoring?</h2>
-              <div className="space-y-6">
-                {[
-                  "Ensure ESG compliance across your supply chain",
-                  "Detect illegal deforestation within protected zones",
-                  "Monitor changes monthly instead of annual audits",
-                  "Reduce cost of physical site inspections by 40%"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-400 shrink-0" />
-                    <span className="text-slate-300 text-lg">{item}</span>
-                  </div>
-                ))}
-              </div>
+      {/* Benefits Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Why Choose EcoVerify AI</h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            "Instant Analysis",
+            "Satellite Verification",
+            "AI-Powered Insights",
+            "Compliance Scoring"
+          ].map((benefit, index) => (
+            <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-xl border border-slate-200">
+              <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+              <span className="font-medium text-slate-900">{benefit}</span>
             </div>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-emerald-500/20 rounded-full blur-3xl"></div>
-              <img 
-                src="https://picsum.photos/seed/forest/800/600" 
-                alt="Satellite view of forest" 
-                className="relative rounded-2xl shadow-2xl border border-slate-700"
-              />
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <footer className="bg-slate-950 text-slate-500 py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="mb-4">© 2024 EcoVerify AI. Built for the Hackathon.</p>
-          <div className="flex justify-center gap-6 text-sm">
-            <span className="hover:text-white cursor-pointer">GitHub</span>
-            <span className="hover:text-white cursor-pointer">Documentation</span>
-            <span className="hover:text-white cursor-pointer">Privacy</span>
-          </div>
+      {/* CTA Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-12 text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">Ready to Verify Compliance?</h2>
+          <p className="text-emerald-50 mb-8 text-lg max-w-2xl mx-auto">
+            Start analyzing factory reports and ensure environmental compliance in minutes.
+          </p>
+          <button
+            onClick={onGetStarted}
+            className="bg-white text-emerald-600 hover:bg-slate-50 px-8 py-4 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+          >
+            Get Started Free
+            <ArrowRight className="h-5 w-5" />
+          </button>
         </div>
-      </footer>
+      </section>
     </div>
   );
 };
