@@ -70,8 +70,14 @@ export const signInWithGoogle = async (): Promise<User> => {
  */
 export const signOutUser = async (): Promise<void> => {
   try {
+    console.log('signOutUser called, current auth state:', auth.currentUser?.email || 'No user');
+    if (!auth) {
+      throw new Error('Firebase auth is not initialized');
+    }
     await signOut(auth);
+    console.log('Firebase signOut completed successfully');
   } catch (error: any) {
+    console.error('Firebase signOut error:', error);
     throw new Error(error.message || 'Failed to sign out');
   }
 };

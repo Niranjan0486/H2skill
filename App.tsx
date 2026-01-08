@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
-import Navbar from './components/Navbar';
-import FirebaseConfigChecker from './components/FirebaseConfigChecker';
 import { ViewState, User } from './types';
 import { onAuthStateChange, signOutUser } from './services/auth';
 
@@ -43,11 +41,16 @@ const App: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      console.log('Attempting to sign out from Firebase...');
       await signOutUser();
+      console.log('Successfully signed out from Firebase');
+      // The auth state listener will automatically update the user state and redirect
+      // But we'll also manually update to ensure immediate feedback
       setUser(null);
       setCurrentView('landing');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing out:', error);
+      alert(`Logout failed: ${error.message || 'Unknown error'}`);
       // Still clear local state even if Firebase sign out fails
       setUser(null);
       setCurrentView('landing');
@@ -72,15 +75,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {currentView !== 'auth' && (
-        <Navbar 
-          currentView={currentView} 
-          user={user} 
-          onNavigate={handleNavigate}
-          onLogout={handleLogout}
-        />
-      )}
-      
       <main>
         {currentView === 'landing' && (
           <LandingPage onGetStarted={handleGetStarted} />
@@ -89,12 +83,9 @@ const App: React.FC = () => {
           <AuthPage onLoginSuccess={handleLoginSuccess} />
         )}
         {currentView === 'dashboard' && user && (
-          <Dashboard />
+          <Dashboard onLogout={handleLogout} />
         )}
       </main>
-
-      {/* Firebase Configuration Checker - Only visible in development */}
-      <FirebaseConfigChecker />
     </div>
   );
 };

@@ -24,15 +24,50 @@ export interface FactoryData {
 }
 
 export interface ComplianceAnalysis {
-  riskLevel: 'low' | 'medium' | 'high';
+  riskLevel: 'low' | 'medium' | 'high' | 'compliant';
   score: number;
-  vegetationTrend: { month: string; coverage: number }[];
+  confidence: number;
+  vegetationTrend: { month: string; year: number; ndvi: number; normalized: number }[];
   summary: string;
+  fullReasoning?: string;
+  vegetationLossPercent: number;
+  ndviBaseline: number;
+  ndviCurrent: number;
+  ndviChange: number;
+  analysisRadius: number; // in km
+  carbonSinkImpact: 'low' | 'moderate' | 'moderate-high' | 'high';
+  anomalyZones?: {
+    sector: string;
+    description: string;
+    significance: string;
+    seasonalExclusion: string;
+  }[];
+  emissionsData?: {
+    period: string;
+    emissions: number;
+    ndvi: number;
+  }[];
+  complianceVerdict: {
+    score: number;
+    riskLevel: 'compliant' | 'moderate-risk' | 'high-risk';
+    esgRelevance: string[];
+    regulatoryRelevance: string[];
+    confidence: number;
+  };
+  recommendedActions: {
+    priority: 'high' | 'medium' | 'low';
+    action: string;
+    description: string;
+    targetAudience: 'auditor' | 'regulator' | 'internal';
+  }[];
+  assessmentId: string;
+  assessmentTimestamp: string;
   satelliteImages: {
     id: string;
     date: string;
     url: string;
     description: string;
+    type: 'true-color' | 'false-color' | 'ndvi';
   }[];
 }
 

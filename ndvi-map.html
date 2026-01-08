@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDVI Change Map - Tiruppur</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+    
+    #map {
+      height: 100vh;
+      width: 100vw;
+    }
+    
+    .map-title {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Title overlay -->
+  <div class="map-title">NDVI Change (Jan → May 2024)</div>
+  
+  <!-- Map container -->
+  <div id="map"></div>
+  
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <script>
+    // Your Earth Engine tile URL
+    const eeTileUrl = "https://earthengine.googleapis.com/v1/projects/h2skill-483707/maps/75ca6ba7dbefbea865e15c2ef2fac98e-bc69a6d2511f357e23a80d3e60f5928d/tiles/{z}/{x}/{y}";
+    
+    // Center coordinates: Tiruppur, India
+    const tiruppurCenter = [11.10, 77.34];
+    
+    // Initialize the map
+    const map = L.map('map', {
+      center: tiruppurCenter,
+      zoom: 13,
+      zoomControl: true
+    });
+    
+    // Add base map (OpenStreetMap for context)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    
+    // Add Earth Engine NDVI change layer
+    L.tileLayer(eeTileUrl, {
+      opacity: 0.85,
+      attribution: 'Sentinel-2 NDVI Change | Google Earth Engine'
+    }).addTo(map);
+    
+    // Add 3 km buffer circle around factory
+    L.circle(tiruppurCenter, {
+      radius: 3000,  // 3 km in meters
+      color: '#ff7800',
+      weight: 3,
+      fillColor: '#ff7800',
+      fillOpacity: 0.1
+    }).addTo(map);
+    
+    // Add a marker at the factory location
+    L.marker(tiruppurCenter)
+      .addTo(map)
+      .bindPopup('Factory Location<br>Tiruppur Textile Cluster');
+  </script>
+</body>
+</html>
+
