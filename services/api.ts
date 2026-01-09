@@ -1,6 +1,7 @@
 import { AnalysisResult } from '../types';
 import { runPipeline, handlePipelineError } from '../backend/pipeline';
 import type { FactoryInput, PipelineOutput } from '../backend/types';
+import { auth } from './firebase';
 
 /**
  * Backend Pipeline Integration
@@ -19,23 +20,45 @@ import type { FactoryInput, PipelineOutput } from '../backend/types';
  * 8. Generates evidence and summary
  */
 
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_BACKEND_URL || 'https://ecoverify-backend.onrender.com';
+
 /**
- * Analyzes factory data using the backend pipeline
- * @param factoryInput - Factory input data (name, location, established year)
- * @returns Analysis result compatible with frontend
+ * Analyzes factory data by calling the protected Render backend.
+ * Backend runs the existing pipeline and returns AnalysisResult.
  */
 export async function analyzeFactory(factoryInput: FactoryInput): Promise<AnalysisResult> {
-  try {
-    // Run the complete pipeline
-    const pipelineOutput: PipelineOutput = await runPipeline(factoryInput);
-
-    // Transform pipeline output to frontend format
-    return transformPipelineOutputToAnalysisResult(pipelineOutput);
-  } catch (error) {
-    const errorInfo = handlePipelineError(error);
-    console.error('Pipeline error:', errorInfo);
-    throw new Error(errorInfo.error);
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error('User is not authenticated');
   }
+
+  const idToken = await user.getIdToken();
+
+  const response = await fetch(`${BACKEND_BASE_URL}/api/analyze-factory`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${idToken}`,
+    },
+    body: JSON.stringify(factoryInput),
+  });
+
+  if (!response.ok) {
+    let message = 'Backend error';
+    try {
+      const data = await response.json();
+      if (data?.error) {
+        message = data.error;
+      }
+    } catch {
+      // ignore JSON parse errors
+    }
+    throw new Error(message);
+  }
+
+  const data = await response.json();
+  return data as AnalysisResult;
 }
 
 /**
