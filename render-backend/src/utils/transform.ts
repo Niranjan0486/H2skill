@@ -152,7 +152,7 @@ export function transformPipelineOutputToAnalysisResult(
         score: complianceScore,
         riskLevel: riskLevelVerdict,
         esgRelevance: ["Environmental Impact", "Carbon Footprint", "Biodiversity"],
-        regulatoryRelevance: ["EIA Compliance", "Forest Conservation Act"],
+        regulatoryRelevance: [], // NO REGULATORY CLAIMS - removed per requirements
         confidence: Math.round(output.confidence * 100),
       },
       recommendedActions: [

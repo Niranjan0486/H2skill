@@ -16,14 +16,12 @@ import { PipelineOutput, NDVIData, RiskClassification, FactoryInput, AOIBuffer, 
  * Generates a human-readable location string
  * @param input - Factory input with coordinates
  * @returns Location string
+ * 
+ * NO HARDCODED LOCATIONS - Always uses provided coordinates
  */
 function getLocationString(input: FactoryInput): string {
-  // For the demo location (Tiruppur), return known location
-  if (Math.abs(input.latitude - 11.1085) < 0.01 && Math.abs(input.longitude - 77.3411) < 0.01) {
-    return 'Tiruppur, Tamil Nadu';
-  }
-  
-  // Generic format for other locations
+  // Use coordinates directly - no hardcoded fallbacks
+  console.log('[OUTPUT] Generating location string for coordinates:', input.latitude, input.longitude);
   return `Lat: ${input.latitude.toFixed(4)}, Lng: ${input.longitude.toFixed(4)}`;
 }
 
@@ -45,9 +43,9 @@ function generateSummary(
 
   const firstYear = ndviData[0].month.split('-')[0];
   const lastYear = ndviData[ndviData.length - 1].month.split('-')[0];
-  
+
   let summary = `Satellite analysis from ${firstYear} to ${lastYear} `;
-  
+
   if (riskClassification.riskLevel === 'HIGH') {
     summary += 'shows a sustained reduction in vegetation cover around the industrial area. ';
     summary += 'Multiple periods of significant vegetation loss were detected, indicating potential environmental impact.';
@@ -59,7 +57,9 @@ function generateSummary(
     summary += 'No significant deforestation or vegetation loss patterns detected.';
   }
 
-  summary += ` Analysis confidence: ${(riskClassification.confidence * 100).toFixed(0)}%.`;
+  // Replace absolute percentage with grounded confidence statement for regulatory credibility
+  const confidenceLevel = riskClassification.confidence >= 0.8 ? 'High' : riskClassification.confidence >= 0.6 ? 'Medium' : 'Limited';
+  summary += ` Data confidence: ${confidenceLevel} (based on Sentinel-2 satellite imagery and explicit coordinates).`;
 
   return summary;
 }

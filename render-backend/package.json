@@ -8,13 +8,19 @@
     "start": "tsx server.ts"
   },
   "dependencies": {
-    "express": "^4.21.1",
-    "firebase-admin": "^12.7.0",
+    "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "firebase-admin": "^12.7.0",
+    "multer": "^2.0.2",
+    "pdf-parse": "^2.4.5",
     "tsx": "^4.19.2"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/multer": "^2.0.0"
   }
 }

@@ -23,8 +23,8 @@ export function generateTimeWindow(
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  // Use provided endYear, or current year, or fixed demo end (2023 for hackathon)
-  const finalEndYear = endYear || Math.min(currentYear, 2023); // Fixed demo end for MVP
+  // Use provided endYear, or current year
+  const finalEndYear = endYear || currentYear;
 
   const startDate = new Date(input.establishedYear, 0, 1); // January 1st
   const endDate = new Date(finalEndYear, 11, 31); // December 31st

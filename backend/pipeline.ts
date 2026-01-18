@@ -35,6 +35,7 @@ import { formatPipelineOutput } from './step8_output';
 export async function runPipeline(input: FactoryInput): Promise<PipelineOutput> {
   console.log('🚀 Starting environmental compliance analysis pipeline...');
   console.log(`📍 Factory: ${input.factoryName}`);
+  console.log(`[NDVI] Using coordinates: ${input.latitude}, ${input.longitude}`);
   console.log(`📍 Location: ${input.latitude}, ${input.longitude}`);
 
   // STEP 1: Input Validation
